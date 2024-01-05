@@ -151,11 +151,12 @@ def get_mn_patches(input_tensor, number_patches, patch_size):
 # pass path to label mask too?
 class SegDataset(Dataset):
     all_classes = [('sand', 'ea7207'), ('soil', 'ffc000'), ('low_veg_bare', '96b810'), ('low_veg_non-bare', 'eeff00'),
-                   ('high_veg_non-bare', '00ae7d'), ('urban_low', 'ffffff'), ('urban_medium', 'fd00b5'), ('urban_high', 'ff0000'),
+                   ('high_veg_non-bare', '00ae7d'), ('high_veg_bare', '7eecdb'), ('urban_low', 'ffffff'),
+                   ('urban_medium', 'fd00b5'), ('urban_high', 'ff0000'),
                    ('industry', '848484'), ('snow', '86d9ff'), ('water', '00007d'), ('rock', '584444')]
 
 
-    def __init__(self, parent_pth, vert_split, patch_size=256, train=True, classes=None,total_num_patches=None):
+    def __init__(self, parent_pth, vert_split, patch_size=256, train=True, total_num_patches=None):
         """""
         parent_pth (string): path to parent directory. images and labels should be subdirectories. 
         img_pth (string): path image/s directory
@@ -291,33 +292,33 @@ class SegDataset(Dataset):
         return self.images[idx], self.labels[idx]
 
 
-if __name__ == "__main__":
-    # dataset = SegDataset('../../../ste/rnd/User/yusuf/city_data/Berlin_Summer', vert_split=False, total_num_patches= [7, 8])
-    # #print(len(dataset))
-    # #print(len())
-    # # print(f' all classes: {dataset.all_classes}')
-    # #
-    # # print(f'classes to indices: {dataset.class_to_index}')
-    # # print(dataset.class_indices)
-    #
-    # for i, (image,label) in enumerate(dataset):
-    #     #print(label.shape)
-    #     #print(image.shape)
-    #     print(image.shape)
-    #     img_array = image.numpy()
-    #     print(img_array.shape)
-    #
-    #     #plt.imshow(np.transpose(img_array, (1,2,0)))
-    #     #plt.show()
-
-        # if i==0:
-        #     break
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
-    print(torch.cuda.is_available())
-
-    num_gpus = torch.cuda.device_count()
-
-    print(f'number of available gpus is: {num_gpus}')
+# if __name__ == "__main__":
+#     # dataset = SegDataset('../../../ste/rnd/User/yusuf/city_data/Berlin_Summer', vert_split=False, total_num_patches= [7, 8])
+#     # #print(len(dataset))
+#     # #print(len())
+#     # # print(f' all classes: {dataset.all_classes}')
+#     # #
+#     # # print(f'classes to indices: {dataset.class_to_index}')
+#     # # print(dataset.class_indices)
+#     #
+#     # for i, (image,label) in enumerate(dataset):
+#     #     #print(label.shape)
+#     #     #print(image.shape)
+#     #     print(image.shape)
+#     #     img_array = image.numpy()
+#     #     print(img_array.shape)
+#     #
+#     #     #plt.imshow(np.transpose(img_array, (1,2,0)))
+#     #     #plt.show()
+#
+#         # if i==0:
+#         #     break
+#     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+#
+#     print(torch.cuda.is_available())
+#
+#     num_gpus = torch.cuda.device_count()
+#
+#     print(f'number of available gpus is: {num_gpus}')
 
 
