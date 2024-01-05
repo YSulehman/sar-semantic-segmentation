@@ -2,14 +2,16 @@ import os
 import torch
 import pickle
 import numpy as np
+from matplotlib.colors import ListedColormap
 from sklearn.metrics import confusion_matrix
 
 
 class Evaluate:
-    def __init__(self, model, model_pth, test_loader, device, save_dir):
+    def __init__(self, model, model_pth, test_loader, rgb_dict, device, save_dir):
         self.model = model
         self.model_pth = model_pth
         self.test_loader = test_loader
+        self.rgb_dict = rgb_dict
         self.device = device
         self.save_dir = save_dir
 
@@ -48,5 +50,11 @@ class Evaluate:
             pickle.dump(conf_matrix, f)
         print(f'confusion matrix saved to: {file}')
 
-    def _predicted_masks(self):
-        pass
+    def _predicted_masks(self, predictions):
+        """
+        takes a batch of predictions (batch, patch_size, patch_size) and converts each to rgb representation
+        """
+        label_colours = list(self.rgb_dict.keys())
+        colour_map = ListedColormap(label_colours)
+
+        predicted_mask = colour_map(predictions.cpu().numpy())
