@@ -150,7 +150,7 @@ def get_mn_patches(input_tensor, number_patches, patch_size):
 
 # pass path to label mask too?
 class SegDataset(Dataset):
-    all_classes = [('sand', 'ea7207'), ('soil', 'ffc000'), ('low_veg_bare', '96b810'), ('low_veg_non-bare', 'eeff00'),
+    all_classes = [('unlabelled', '000000'), ('sand', 'ea7207'), ('soil', 'ffc000'), ('low_veg_bare', '96b810'), ('low_veg_non-bare', 'eeff00'),
                    ('high_veg_non-bare', '00ae7d'), ('high_veg_bare', '7eecdb'), ('urban_low', 'ffffff'),
                    ('urban_medium', 'fd00b5'), ('urban_high', 'ff0000'),
                    ('industry', '848484'), ('snow', '86d9ff'), ('water', '00007d'), ('rock', '584444')]
@@ -293,7 +293,8 @@ class SegDataset(Dataset):
 
 
 # if __name__ == "__main__":
-#     # dataset = SegDataset('../../../ste/rnd/User/yusuf/city_data/Berlin_Summer', vert_split=False, total_num_patches= [7, 8])
+#     dataset = SegDataset('../../../ste/rnd/User/yusuf/city_data/Berlin_Summer', vert_split=False)
+#     print(dataset.hex_rgb)
 #     # #print(len(dataset))
 #     # #print(len())
 #     # # print(f' all classes: {dataset.all_classes}')
