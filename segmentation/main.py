@@ -34,6 +34,7 @@ def main(args):
         model = smp.Unet(encoder_name=encoder, encoder_weights=encoder_weights, in_channels=in_channels,
                          classes=out_channels)
     else:
+        #aux_params = dict(dropout=0.2, classes=out_channels)
         model = smp.Unet(encoder_name=encoder, in_channels=in_channels, classes=out_channels)
 
     # update this to split into train and validation
@@ -47,8 +48,8 @@ def main(args):
     val_loader = DataLoader(val_data, batch_size=batch, shuffle=False)
 
     # allow for choice of loss and optimiser?
-    loss_function = nn.CrossEntropyLoss()
-    optimiser = torch.optim.Adam(model.parameters(), lr=lr)
+    loss_function = nn.CrossEntropyLoss(ignore_index=0)
+    optimiser = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-4)
 
     # train model
     t = trainer.Trainer(model, train_loader, val_loader, loss_function, optimiser, epochs, device, save_dir)
@@ -59,11 +60,15 @@ def main(args):
     # evaluate model
     if model_eval:
         # pass pth in general
+        model_pth = '/ste/rnd/User/yusuf/city_data/Berlin_Summer/trained_model.pth'
         test_data = dataset.SegDataset(pth,
                                        vert_split=False, train=False)
         test_loader = DataLoader(test_data, batch_size=batch, shuffle=False)
-        e = evaluate.Evaluate(model, t.file, test_data, device, save_dir)
+        # can normally pass t.file as 2nd argument
+        e = evaluate.Evaluate(model, model_pth, test_loader, test_data.hex_rgb, device, save_dir)
+        print('beginning evaluation....')
         e.perform_evaluation()
+        print('evaluation complete!')
 
 
 if __name__ == "__main__":
@@ -87,7 +92,7 @@ if __name__ == "__main__":
 
     # parser.add_argument('-opt', '--optimiser', type=str, default='adams', help='optimiser for training')
 
-    parser.add_argument('-bch', '--batch_size', type=int, default=10,
+    parser.add_argument('-bch', '--batch_size', type=int, default=11,
                         help='batch size for train loader')
 
     parser.add_argument('-eps', '--epochs', type=int, default=100,
