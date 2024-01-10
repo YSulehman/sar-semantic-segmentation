@@ -24,7 +24,7 @@ class Evaluate:
         self.device = device
         self.save_dir = save_dir
 
-        print(self.rgb_dict)
+        #print(self.rgb_dict)
 
     def perform_evaluation(self):
         self.model.load_state_dict(torch.load(self.model_pth))
@@ -48,13 +48,13 @@ class Evaluate:
                 # true_labels.extend(labels.view(-1).cpu().numpy())
                 # predicted_labels.extend(predictions.view(-1).cpu().numpy())
 
-                if i == 0:
-                    self._predicted_masks(labels[0, :, :], 0)
-                    # self._predicted_masks(labels[1, :, :], 1)
-                    # for j in range(predictions.shape[0]):
-                    #    #print('predictions', predictions[j, :, :].min(), predictions[j, :, :].max())
-                    #    #print('labels', labels[j, :, :].min(), labels[j, :, :].max())
-                    #    self._predicted_masks(labels[j, :, :], j)
+                if i == 8:
+                    self._predicted_masks(labels[7, :, :], 7)
+                #     # self._predicted_masks(labels[1, :, :], 1)
+                #     for j in range(predictions.shape[0]):
+                #        #print('predictions', predictions[j, :, :].min(), predictions[j, :, :].max())
+                #        #print('labels', labels[j, :, :].min(), labels[j, :, :].max())
+                #        self._predicted_masks(predictions[j, :, :], j)
 
             print(f'Test accuracy: {100. * (num_correct / total_test)}')
             # compute confusion matrix and save
@@ -84,6 +84,16 @@ class Evaluate:
 
         # predicted_mask = colour_map(predictions.cpu().numpy()).astype(np.uint8)
 
+        # dealing with transparency
+        fig, ax = plt.subplots()
+
+        # display the mask without interpolation
+        ax.imshow(predicted_mask, interpolation='none')
+
+        # set a non-transparent background colour
+        ax.set_facecolor('white')
+
         # plt.imshow(predicted_mask, cmap=colour_map)
-        plt.imshow(predicted_mask)
-        plt.savefig('./true' + str(index) + '.png')
+        #plt.imshow(predicted_mask, interpolation=None) -> normally without accounting for transparency
+        #plt.savefig('./test_true' + str(index) + '.png')
+        plt.savefig('./testing_true' + str(index) + '.png', bbox_inches='tight', pad_inches=0.1)
