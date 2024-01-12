@@ -49,7 +49,7 @@ def main(args):
 
     # allow for choice of loss and optimiser?
     loss_function = nn.CrossEntropyLoss(ignore_index=0)
-    optimiser = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-4)
+    optimiser = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-3)
 
     # train model
     t = trainer.Trainer(model, train_loader, val_loader, loss_function, optimiser, epochs, device, save_dir)
@@ -60,7 +60,7 @@ def main(args):
     # evaluate model
     if model_eval:
         # pass pth in general
-        model_pth = '/ste/rnd/User/yusuf/city_data/Berlin_Summer/trained_model.pth'
+        model_pth = '/ste/rnd/User/yusuf/city_data/Berlin_Summer/trained_model_v1.pth'
         test_data = dataset.SegDataset(pth,
                                        vert_split=False, train=False)
         test_loader = DataLoader(test_data, batch_size=batch, shuffle=False)
@@ -116,10 +116,3 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(args)
-
-    # print(torch.backends.cudnn.enabled)
-    # if torch.cuda.is_available():
-    #     print(f'number of gpus available is: {torch.cuda.device_count()}')
-    # else:
-    #     print('no gpus')
-    # print("CUDA_VISIBLE_DEVICES:", os.environ.get("CUDA_VISIBLE_DEVICES", "Not set"))
