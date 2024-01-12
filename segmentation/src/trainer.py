@@ -25,7 +25,7 @@ class Trainer:
             print(f'Epoch number {epoch + 1}, Validation accuracy: {100. * (val_correct / num_val)}')
             print('---')
         # save the trained model
-        file = os.path.join(self.save_dir, 'trained_model.pth')
+        file = os.path.join(self.save_dir, 'trained_model_v1.pth')
         self.file = file
         torch.save(self.model.state_dict(), file)
         print(f'model has been saved to {self.file}')
