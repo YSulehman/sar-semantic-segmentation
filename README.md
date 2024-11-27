@@ -1,6 +1,5 @@
 # Semantic Segmentation for Satellite Imagery
-
-This repository contains code for applying segmentation networks to [Sentinel-1](https://www.esa.int/Applications/Observing_the_Earth/Copernicus/Sentinel-1) image data of cities.
+This project performs semantic segmentation of [Sentinel-1](https://www.esa.int/Applications/Observing_the_Earth/Copernicus/Sentinel-1) and [Sentinel-2](https://www.esa.int/Applications/Observing_the_Earth/Copernicus/Sentinel-2) satellite image data of cities. 
 
 ## Installation
 
