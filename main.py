@@ -2,7 +2,7 @@ import os
 import torch
 import argparse
 import torch.nn as nn
-from src import dataset, trainer, evaluate
+from sar_semantic_segmentation.src import dataset, trainer, evaluate
 from torch.utils.data import DataLoader
 import segmentation_models_pytorch as smp
 
